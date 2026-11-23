@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      NODE_ENV: production
+      JWT_SECRET: ${JWT_SECRET:-troque-este-segredo-em-producao}
+      DB_FILE: /data/cine.db
+    volumes:
+      - dbdata:/data
+    ports:
+      - "3001:3001"
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+volumes:
+  dbdata:
